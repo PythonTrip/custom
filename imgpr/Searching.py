@@ -1,7 +1,8 @@
 import cv2
-from .Image import image
+from .Image import Image
 import numpy as np
 
+image = Image()
 rad = np.radians
 
 

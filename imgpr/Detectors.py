@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 import cv2
-from .Image import image
+from .Image import Image
 import imutils
 import numpy as np
-from .Searching import ImageObject
 from pyzbar import pyzbar
 
+image = Image()
 
 # just nothing
 def nothing(*arg):
@@ -16,14 +16,13 @@ def make_coordinates(image, line_parameters):
     # Y = MX + B
     slope, intercept = line_parameters
     y1 = image.shape[0]
-    y2 = int(y1 * (3/5))
+    y2 = int(y1 * (3 / 5))
     x1 = int((y1 - intercept) / slope)
     x2 = int((y2 - intercept) / slope)
     return np.array([x1, y1, x2, y2])
 
 
 def average_slope_intercept(image, lines):
-
     left_fit = []
     right_fit = []
 
@@ -85,6 +84,17 @@ class NoneDetection(ADetection):
     def post(self): pass
 
 
+class TextAnalyze(ADetection):
+    def __init__(self):
+        super().__init__()
+
+    def update_img(self, *args, **kwargs):
+        pass
+
+    def post(self, *args, **kwargs):
+        pass
+
+
 class LineDetection(ADetection):
     def __init__(self):
         super().__init__()
@@ -118,7 +128,7 @@ class QRDetection(ADetection):
         for i, val in enumerate(image.objects):
             x, y, w, h = val[4]
             image.objects[i][4] = (x - 7, y - 7, w + 14, h + 14)
-            roi = image.ROI(img.copy(), val[4])
+            roi = image.ROI(out.copy(), val[4])
             if not 0 in roi.shape:
                 out = imutils.rotate(roi, np.degrees(val[1]))
                 detectedBarcodes = pyzbar.decode(roi)

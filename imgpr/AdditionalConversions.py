@@ -1,6 +1,8 @@
 import cv2
 from abc import ABC, abstractmethod
-from .Image import image
+from .Image import Image
+
+image = Image()
 
 
 class ATransform(ABC):

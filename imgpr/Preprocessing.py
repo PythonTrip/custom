@@ -1,13 +1,16 @@
 import cv2
 import numpy as np
 from .Detectors import ADetection
-from .Image import image
+from .Image import Image
+
+image = Image()
 
 
 # Обработка изображения
 class ImageProcessing:
     def __init__(self, detection: ADetection):
         self.detect = detection
+        self.post_data = None
 
     # Invoke actions
     def transform(self, actions=None):
@@ -15,6 +18,7 @@ class ImageProcessing:
         if actions is not None:
             for action, params in actions:
                 action.main(params)
+        self.post_data = self.detect.post()
 
 
 # События мыши

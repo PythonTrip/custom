@@ -25,8 +25,6 @@ class Image:
 
     def region(self, vertices):
         mask = np.zeros_like(self.img)
-        # channel_count = self.img.shape[2]
-        # match_mask = (255,) * channel_count
         cv2.fillPoly(mask, vertices, 1024)
         self.img = cv2.bitwise_and(self.img, mask)
 
@@ -43,16 +41,10 @@ class Image:
         self.img = img[int(rectangle[1]):int(rectangle[1] + rectangle[3]),
                    int(rectangle[0]):int(rectangle[0] + rectangle[2])]
 
-    @staticmethod
-    def black_white_filling():
-        white = sum((image.get_image() / 255).ravel())
-        WH = image.width * image.height
+    def black_white_filling(self):
+        white = sum((self.get_image() / 255).ravel())
+        WH = self.img.width * self.img.height
         return white / WH * 100
-
-    @staticmethod
-    def coordinates_ROI2FRAME(roi, xy):
-        x, y = xy
-        return [x + roi[0], y + roi[1]]
 
     @property
     def width(self):
@@ -62,5 +54,8 @@ class Image:
     def height(self):
         return self.img.shape[0]
 
+    @staticmethod
+    def coordinates_ROI2FRAME(roi, xy):
+        x, y = xy
+        return [x + roi[0], y + roi[1]]
 
-image = Image()

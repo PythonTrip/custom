@@ -6,13 +6,19 @@ def to_float(data):
     return float(data.replace(',', '.'))
 
 
-class Data:
+class Reader:
     def __init__(self):
         self.data = []
         self.directs = []
 
     def clear(self):
         self.data = []
+
+    @staticmethod
+    def walk_for_dir(direct) -> str:
+        for (dir_path, _, filenames) in walk(direct):
+            for filename in filenames:
+                yield dir_path, filename
 
     @staticmethod
     def read_from_dir(direct, skip=2):
@@ -22,15 +28,15 @@ class Data:
                     yield file, "".join(txt.readlines()[skip:])
 
     @staticmethod
-    def read_from_data(data):
-        for txt in data:
-            yield "".join(txt)
+    def file2txt(file):
+        with open(file, encoding="utf-8") as txt:
+            text = txt.read()
+        return text
 
     @staticmethod
-    def lines_read(file, skip=2):
-        with open(file) as txt:
+    def file2lines(file, skip=0):
+        with open(file, encoding="utf-8") as txt:
             lines = txt.readlines()[skip:]
-            txt.close()
         return lines
 
     @staticmethod

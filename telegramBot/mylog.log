@@ -1,0 +1,50 @@
+INFO     [2020-11-24 16:41:07,275] 001 text:'/math sqrt(-1)' // chat:[private:358188466]
+INFO     [2020-11-24 16:41:07,493] 002 ID:286001203 // timeout:218 ms)
+INFO     [2020-11-24 16:41:21,465] Bot: TEST_PYTHON_BOT [@KIT_TEST_PYTHON_BOT]
+WARNING  [2020-11-24 16:41:22,800] Updates were skipped successfully.
+INFO     [2020-11-24 16:41:22,995] Start polling.
+INFO     [2020-11-24 16:42:19,557] 001 text:'/math sqrt(-1)' // chat:[private:358188466]
+INFO     [2020-11-24 16:42:19,772] 002 ID:286001204 // timeout:215 ms)
+INFO     [2020-11-24 16:42:29,780] Bot: TEST_PYTHON_BOT [@KIT_TEST_PYTHON_BOT]
+WARNING  [2020-11-24 16:42:31,118] Updates were skipped successfully.
+INFO     [2020-11-24 16:42:31,323] Start polling.
+INFO     [2020-11-24 16:42:39,946] 001 text:'/math sqrt(-1)' // chat:[private:358188466]
+INFO     [2020-11-24 16:42:40,186] 002 ID:286001205 // timeout:240 ms)
+INFO     [2020-11-24 16:43:15,194] 001 text:'/math "sds"/4' // chat:[private:358188466]
+ERROR    [2020-11-24 16:43:15,195] 003 ID:286001206 // error:unsupported operand type(s) for /: 'str' and 'int' // timeout:1
+ERROR    [2020-11-24 16:43:15,388] Task exception was never retrieved
+future: <Task finished name='Task-16' coro=<Dispatcher._process_polling_updates() done, defined at G:\Anaconda\lib\site-packages\aiogram\dispatcher\dispatcher.py:380> exception=TypeError("unsupported operand type(s) for /: 'str' and 'int'")>
+Traceback (most recent call last):
+  File "G:\Anaconda\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 388, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "G:\Anaconda\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 225, in process_updates
+    return await asyncio.gather(*tasks)
+  File "G:\Anaconda\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "G:\Anaconda\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 246, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "G:\Anaconda\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "E:\YandexDisk\DRIVE\Projects\Optional\Telegram_bots\handlers\general_commands.py", line 59, in h_math
+    await message.reply(eval(f"{task}"))
+  File "<string>", line 1, in <module>
+TypeError: unsupported operand type(s) for /: 'str' and 'int'
+ERROR    [2020-11-24 18:29:55,854] Cause exception while getting updates.
+Traceback (most recent call last):
+  File "G:\Anaconda\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 359, in start_polling
+    updates = await self.bot.get_updates(limit=limit, offset=offset, timeout=timeout)
+  File "G:\Anaconda\lib\site-packages\aiogram\bot\bot.py", line 97, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "G:\Anaconda\lib\site-packages\aiogram\bot\base.py", line 208, in request
+    return await api.make_request(self.session, self.server, self.__token, method, data, files,
+  File "G:\Anaconda\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "G:\Anaconda\lib\site-packages\aiohttp\client.py", line 1117, in __aenter__
+    self._resp = await self._coro
+  File "G:\Anaconda\lib\site-packages\aiohttp\client.py", line 544, in _request
+    await resp.start(conn)
+  File "G:\Anaconda\lib\site-packages\aiohttp\client_reqrep.py", line 905, in start
+    self._continue = None
+  File "G:\Anaconda\lib\site-packages\aiohttp\helpers.py", line 656, in __exit__
+    raise asyncio.TimeoutError from None
+asyncio.exceptions.TimeoutError

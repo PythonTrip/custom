@@ -7,6 +7,7 @@ from pyzbar import pyzbar
 
 image = Image()
 
+
 # just nothing
 def nothing(*arg):
     pass
@@ -105,7 +106,8 @@ class LineDetection(ADetection):
         image.set_image(cv2.Canny(image.get_image(), 50, 150))
 
     def post(self, rho, theta, threshold, minLineLength=None, maxLineGap=None):
-        self.lines = cv2.HoughLinesP(image.get_image(), rho, theta, threshold, minLineLength, maxLineGap)
+        self.lines = cv2.HoughLinesP(image.get_image(), rho, theta, threshold,
+                                     minLineLength, maxLineGap)
         self.lines = average_slope_intercept(image.get_image(), self.lines)
 
 
@@ -151,7 +153,8 @@ class CircleDetection(ADetection):
         image.set_image(cv2.Canny(image.get_image(), 180, 255))
 
     def post(self):
-        circles = cv2.HoughCircles(image.get_image(), cv2.HOUGH_GRADIENT, 2, 1, np.array([]))
+        circles = cv2.HoughCircles(image.get_image(), cv2.HOUGH_GRADIENT, 2, 1,
+                                   np.array([]))
         if circles is not None and len(circles) > 0:
             maxRadius = 0
             x = 0
@@ -177,7 +180,8 @@ class ColorDetection(ADetection):
 
     def update_img(self):
         image.set_image(cv2.cvtColor(image.get_image(), cv2.COLOR_BGR2HSV))
-        image.set_image(cv2.inRange(image.get_image(), self.hsv[0], self.hsv[1]))
+        image.set_image(
+            cv2.inRange(image.get_image(), self.hsv[0], self.hsv[1]))
 
     def createTrackbars(self):
         cv2.namedWindow("settings")  # create settings window

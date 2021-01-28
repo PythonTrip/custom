@@ -4,6 +4,7 @@ from .Image import Image
 import imutils
 import numpy as np
 from pyzbar import pyzbar
+from functools import partial
 
 image = Image()
 
@@ -176,7 +177,12 @@ class ColorDetection(ADetection):
         super().__init__()
         self.hsv = [hsv_min, hsv_max]
 
-    def post(self): pass
+    def post(self):
+        pass
+
+    def update_hsv(self, indexes, val):
+        i, j = indexes
+        self.hsv[i][j] = val
 
     def update_img(self):
         image.set_image(cv2.cvtColor(image.get_image(), cv2.COLOR_BGR2HSV))
@@ -185,17 +191,9 @@ class ColorDetection(ADetection):
 
     def createTrackbars(self):
         cv2.namedWindow("settings")  # create settings window
-        cv2.createTrackbar('h1', 'settings', self.hsv[0][0], 255, nothing)
-        cv2.createTrackbar('s1', 'settings', self.hsv[0][1], 255, nothing)
-        cv2.createTrackbar('v1', 'settings', self.hsv[0][2], 255, nothing)
-        cv2.createTrackbar('h2', 'settings', self.hsv[1][0], 255, nothing)
-        cv2.createTrackbar('s2', 'settings', self.hsv[1][1], 255, nothing)
-        cv2.createTrackbar('v2', 'settings', self.hsv[1][2], 255, nothing)
-
-    def getHSV(self):
-        self.hsv[0][0] = cv2.getTrackbarPos('h1', 'settings')
-        self.hsv[0][1] = cv2.getTrackbarPos('s1', 'settings')
-        self.hsv[0][2] = cv2.getTrackbarPos('v1', 'settings')
-        self.hsv[1][0] = cv2.getTrackbarPos('h2', 'settings')
-        self.hsv[1][1] = cv2.getTrackbarPos('s2', 'settings')
-        self.hsv[1][2] = cv2.getTrackbarPos('v2', 'settings')
+        parameter = ['h', 's', 'v']
+        for i in range(2):
+            for j in range(3):
+                cv2.createTrackbar(f"{parameter[j]}{i + 1}", 'settings',
+                                   self.hsv[i][j], 255,
+                                   partial(self.update_hsv, [i, j]))
